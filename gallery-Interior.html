@@ -458,19 +458,8 @@
                                         <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                             <div class="relative grid gap-6 px-5 py-6 bg-white sm:gap-8 sm:p-8">
                                                 <!-- Render each sublink -->
-                                                <!-- <each loop="link in [{&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Interior&#x27;, &#x27;href&#x27;: &#x27;gallery-Interior&#x27;}, {&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Exterior&#x27;, &#x27;href&#x27;: &#x27;gallery-Exterior&#x27;}, {&#x27;title&#x27;: &#x27;All Photos&#x27;, &#x27;copy&#x27;: &#x27;All Photos&#x27;, &#x27;href&#x27;: &#x27;gallery-All&#x27;}]"> -->
+                                                <!-- <each loop="link in [{&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Exterior&#x27;, &#x27;href&#x27;: &#x27;gallery-Exterior&#x27;}, {&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Interior&#x27;, &#x27;href&#x27;: &#x27;gallery-Interior&#x27;}, {&#x27;title&#x27;: &#x27;All Photos&#x27;, &#x27;copy&#x27;: &#x27;All Photos&#x27;, &#x27;href&#x27;: &#x27;gallery-All&#x27;}]"> -->
                                                   
-                                                    <a
-                                                        href=" gallery-Interior "
-                                                        role="menuitem"
-                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
-                                                    >
-                                                        <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
-                                                        <p class="mt-1 text-sm text-gray-500">Interior</p>
-                                                    </a>
-                                                <!-- </each> -->
-                                               <!--  -->
-                                                 
                                                     <a
                                                         href=" gallery-Exterior "
                                                         role="menuitem"
@@ -478,6 +467,17 @@
                                                     >
                                                         <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
                                                         <p class="mt-1 text-sm text-gray-500">Exterior</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                                 
+                                                    <a
+                                                        href=" gallery-Interior "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Interior</p>
                                                     </a>
                                                 <!-- </each> -->
                                                <!--  -->
@@ -775,15 +775,15 @@
                                         <div class="relative grid gap-6 px-5 py-2 bg-white rounded-lg">
                                             <!-- Render each sublink -->
                                             
-                                                <a href="gallery-Interior" role="menuitem" class="block p-3 -m-3 transition rounded-md">
-                                                    <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
-                                                    <p class="mt-1 text-sm text-gray-500">Interior</p>
-                                                </a>
-                                            <!-- </each> -->
-                                            
                                                 <a href="gallery-Exterior" role="menuitem" class="block p-3 -m-3 transition rounded-md">
                                                     <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
                                                     <p class="mt-1 text-sm text-gray-500">Exterior</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                                <a href="gallery-Interior" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Interior</p>
                                                 </a>
                                             <!-- </each> -->
                                             
@@ -842,6 +842,8 @@
         
             
                 
+                    
+                        
                     
                         
                             <!-- Our Best Work Component -->
@@ -961,8 +963,6 @@
     </div>
 </section>
 
-                        
-                    
                         
                     
                 
@@ -1226,7 +1226,7 @@
                                 <a
                                     href="#"
                                     class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
-                                    >Monday: 8:00am - 6:00pm</a
+                                    >Monday: 08:00am - 06:00pm</a
                                 >
                             </li>
                             
@@ -1266,7 +1266,7 @@
                                 <a
                                     href="#"
                                     class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
-                                    >Saturday: 08:00am - 06:00pm</a
+                                    >Saturday: 8:00am - 6:00pm</a
                                 >
                             </li>
                             
@@ -1361,7 +1361,7 @@
                 <!-- Header -->
                 <div class="relative px-6 bg-white">
                     <!-- Title -->
-                    <h2 class="mt-16 mb-2 text-lg font-medium text-center" :id="$id('modal-title')">Send us a text</h2>
+                    <h2 class="mt-6 text-lg font-medium text-center" :id="$id('modal-title')">Send us a text</h2>
                     <!-- Small overlay for scrolling area  -->
                     <div aria-hidden="true" class="absolute inset-x-0 h-8 -bottom-8 bg-gradient-to-b from-white"></div>
                     <button
@@ -1424,7 +1424,7 @@
                                 placeholder="Address"
                             />
                         </div>
-                        <!-- Preferred date of service -->
+                        <!-- Preferred date of service
                         <div>
                             <label for="contact-date" class="sr-only">Preferred Date of Service</label>
                             <input
@@ -1434,9 +1434,9 @@
                                 class="block w-full border-gray-300 py-2.5 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
                                 placeholder="Preferred Date of Service"
                             />
-                        </div>
+                        </div> -->
                         <!-- Promo Code -->
-                        <div>
+                        <!-- <div>
                             <label for="contact-promo-code" class="sr-only">Promo Code</label>
                             <input
                                 type="text"
@@ -1445,7 +1445,7 @@
                                 class="block w-full border-gray-300 py-2.5 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
                                 placeholder="Promo Code"
                             />
-                        </div>
+                        </div> -->
                         <!-- How can we help you? (Concern) -->
                         <div>
                             <label for="contact-concern" class="sr-only">How can we help you?</label>
@@ -1465,72 +1465,72 @@
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-93614"
-                                            name="93614"
+                                            id="contact-service-95427"
+                                            name="95427"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-93614" class="ml-3 text-sm font-medium text-gray-700">Exterior Detailing</label>
+                                        <label for="contact-label-service-95427" class="ml-3 text-sm font-medium text-gray-700">Exterior Detailing</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-93615"
-                                            name="93615"
+                                            id="contact-service-95428"
+                                            name="95428"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-93615" class="ml-3 text-sm font-medium text-gray-700">Paint Polishing</label>
+                                        <label for="contact-label-service-95428" class="ml-3 text-sm font-medium text-gray-700">Paint Polishing</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-93616"
-                                            name="93616"
+                                            id="contact-service-95429"
+                                            name="95429"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-93616" class="ml-3 text-sm font-medium text-gray-700">Paint Correction</label>
+                                        <label for="contact-label-service-95429" class="ml-3 text-sm font-medium text-gray-700">Paint Correction</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-93617"
-                                            name="93617"
+                                            id="contact-service-95430"
+                                            name="95430"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-93617" class="ml-3 text-sm font-medium text-gray-700">Ceramic Coating</label>
+                                        <label for="contact-label-service-95430" class="ml-3 text-sm font-medium text-gray-700">Ceramic Coating</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-93618"
-                                            name="93618"
+                                            id="contact-service-95431"
+                                            name="95431"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-93618" class="ml-3 text-sm font-medium text-gray-700">Interior Detailing</label>
+                                        <label for="contact-label-service-95431" class="ml-3 text-sm font-medium text-gray-700">Interior Detailing</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-93619"
-                                            name="93619"
+                                            id="contact-service-95432"
+                                            name="95432"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-93619" class="ml-3 text-sm font-medium text-gray-700">Headlight Restoration</label>
+                                        <label for="contact-label-service-95432" class="ml-3 text-sm font-medium text-gray-700">Headlight Restoration</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-93620"
-                                            name="93620"
+                                            id="contact-service-95433"
+                                            name="95433"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-93620" class="ml-3 text-sm font-medium text-gray-700">Aluminum Polishing</label>
+                                        <label for="contact-label-service-95433" class="ml-3 text-sm font-medium text-gray-700">Aluminum Polishing</label>
                                     </div>
                                 
                             </div>
