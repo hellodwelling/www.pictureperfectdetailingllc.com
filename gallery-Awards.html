@@ -1,0 +1,1799 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Picture Perfect Detailing</title>
+        <!-- <title>ProPhone Templates</title> -->
+        <!-- TailwindCSS  -->
+        <!-- <link rel="stylesheet" type="text/css" href="/staticfiles/landing_page_gen/tailwind.css"> -->
+        <!-- <link rel="stylesheet" type="stylesheet" href="/staticfiles/landing_page_gen/tailwind.css"> -->
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css"> -->
+        <link rel="stylesheet" href="https://prophone-templates.vercel.app/assets/output.css">
+        
+        <!-- <link rel="stylesheet"  type="text/css"  href="/staticfiles/landing_page_gen/tailwind.css"> -->
+        <!-- Include Scripts -->
+        <!-- Header Component, only used for presentation -->
+
+<!-- Carousel Plugin (can replaced if you already use one) -->
+<script defer src="https://unpkg.com/siema@1.5.1/dist/siema.min.js"></script>
+<!-- Alpine Plugin - Intersect -->
+<script defer src="https://unpkg.com/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+<!-- Alpine Plugin - Focus Trap -->
+<script defer src="https://unpkg.com/@alpinejs/trap@3.x.x/dist/cdn.min.js"></script>
+<!-- Alpine Plugin - Collapse -->
+<script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+<!-- Alpine.js -->
+<script defer src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js"></script>
+<!-- Focus Visible Polyfill -->
+<script defer src="https://unpkg.com/focus-visible@5.2.0/dist/focus-visible.min.js"></script>
+        <!-- <link rel="stylesheet" href="/staticfiles/landing_page_gen/style.css" type="text/css"> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- 
+        <script src="https://prophone.herokuapp.com/staticfiles/landing_page_gen/render.js"></script>  -->
+
+        <!-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script> -->
+        <style>
+            :root {
+                /* Settings */
+                --contrastThreshold: 60%;
+
+                /* Primary color as HSL */
+                --color-primary-h: 208.58638743455498;
+                --color-primary-s: 78.60082304526749%;
+                --color-primary-l: 47.4609375%;
+                --color-primary-darker: hsl(var(--color-primary-h), var(--color-primary-s), calc(var(--color-primary-l) - 7.5%));
+
+                /* Secondary color as HSL */
+                --color-secondary-h: 12.964824120603016;
+                --color-secondary-s: 83.26359832635984%;
+                --color-secondary-l: 46.6796875%;
+                --color-secondary-darker: hsl(var(--color-secondary-h), var(--color-secondary-s), calc(var(--color-secondary-l) - 7.5%));
+
+                --switch: calc((var(--color-primary-l) - var(--contrastThreshold)) * -100);
+                --color-primary-foreground: hsl(0, 0%, var(--switch));
+            }
+        </style>
+        <script type="text/javascript">
+            function send_sms(slug){
+                console.log('send_sms', slug)
+                // var sender_fname = $(`#${form_num}-first-name`).val()
+                // var sender_lname = $(`#${form_num}-last-name`).val()
+                // var sender_number = $(`#${form_num}-phone-number`).val()
+                // console.log(sender_number)
+                // var sender_message = $(`#${form_num}-message`).val()
+                var sender_full_name = $(`#contact-full-name`).val()
+                var full_name_split = sender_full_name.split(' ')
+                var sender_fname = full_name_split.shift()
+                var sender_lname = full_name_split.join(' ')
+                var sender_number = $(`#contact-phone-number`).val()
+                var sender_email = $(`#contact-email`).val()
+                var sender_contact_date = $(`#contact-date`).val()
+                var sender_promo = $(`#contact-promo-code`).val()
+                var sender_address = $(`#contact-address`).val()
+                
+                // iterate over the service
+                var sender_service = "" //$(`#contact-phone-number`).val()
+
+                
+                console.log(sender_number)
+                var sender_message = $(`#contact-concern`).val()
+                if (!sender_fname || !sender_number || !sender_message){
+                // if (!sender_fname || !sender_lname || !sender_number || !sender_message){
+                    alert("Please make sure to fill out all the form fields")
+                    return
+                }
+
+                var cleaned_sender_number = sender_number.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
+                var sender_services = ""
+
+                console.log("text", slug, sender_fname, sender_lname, sender_number, sender_message)
+                // return ' bucks'
+                // fetch('http://127.0.0.1:8000/sms/' + slug , {
+                fetch('https://prophone.herokuapp.com/sms/' + slug , {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        sender_full_name : sender_full_name,
+                        sender_email : sender_email,
+                        sender_promo : sender_promo,
+                        sender_services : sender_services,
+                        sender_fname : sender_fname,
+                        sender_lname: sender_lname,
+                        sender_number: cleaned_sender_number,
+                        sender_message: sender_message,
+                        sender_address: sender_address,
+                        sender_contact_date: sender_contact_date
+                    })
+                    
+                })
+                .then(result => {
+                    //Here body is not ready yet, throw promise
+                    if (!result.ok) throw result;
+                    return result.json();
+                })      
+                .then(result => {
+                    console.log(result)
+                    alert("Your message has been sent!")
+                    location.reload()
+                })
+
+
+                
+            }
+            console.log('go bucks')
+            $('document').ready(function(){
+                console.log('doc ready')
+                let cover = $("#cover-button")
+                console.log("cover", cover)  
+
+                if (cover.position() !== undefined){
+                    let cover_bottom = cover.position().top - 40
+                    $(window).scroll(function(){
+                        console.log("in scroll")
+                        console.log($(window).scrollTop(), cover_bottom)
+                    if($(window).scrollTop() < (cover_bottom)){
+                        if ( $("#side-button").hasClass('-translate-x-80')){
+                        $("#side-button").removeClass("-translate-x-80").addClass("translate-x-64")
+                        }
+                        
+                    }
+                    else{
+                        $("#side-button").addClass("transform -translate-x-80 ease-in duration-700");
+                    }
+                    });
+                } else {
+                    $("#side-button").addClass("transform -translate-x-80 ease-in duration-700");
+                }
+
+                
+                
+                });
+
+        </script>
+    </head>
+    <body x-data="{ contactModalOpen: false, applyModalOpen: false, reviewModalOpen: false, textModalOpen: false, galleryModalOpen:false, active: 0 }" class="pt-24 md:pt-44">
+        <!-- <div class="sticky top-0 z-50 pt-8 pb-4 bg-white">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-medium tracking-tight">ProPhone Templates</h1>
+                <div class="flex items-center mt-2 space-x-4 bg-white">
+                    <span class="sr-only">Select Theme</span>
+                    <div class="flex space-x-2">
+                        <button
+                            :class="active === 0 ? 'ring ring-offset-1 ring-[#1e3a8a]' : ''"
+                            x-on:click="active = 0; setPrimary('224', '78%', '33%'); setSecondary('21', '95%', '48%');"
+                            class="relative w-6 h-6 overflow-hidden transition-all -rotate-45 rounded-full hover:scale-110"
+                        >
+                            <div class="h-3 w-6 bg-[#1e3a8a]"></div>
+                            <div class="h-3 w-6 bg-[#ea580c]"></div>
+                        </button>
+                        <button
+                            :class="active === 1 ? 'ring ring-offset-1 ring-[#1E293B]' : ''"
+                            x-on:click="active = 1; setPrimary('217', '33%', '17%'); setSecondary('142', '83%', '45%');"
+                            class="relative w-6 h-6 overflow-hidden transition-all -rotate-45 rounded-full hover:scale-110"
+                        >
+                            <div class="h-3 w-6 bg-[#1E293B]"></div>
+                            <div class="h-3 w-6 bg-[#22C55E]"></div>
+                        </button>
+                        <button
+                            :class="active === 2 ? 'ring ring-offset-1 ring-[#4F46E5]' : ''"
+                            x-on:click="active = 2; setPrimary('243', '69%', '59%'); setSecondary('189', '97%', '43%');"
+                            class="relative w-6 h-6 overflow-hidden transition-all -rotate-45 rounded-full hover:scale-110"
+                        >
+                            <div class="h-3 w-6 bg-[#4F46E5]"></div>
+                            <div class="h-3 w-6 bg-[#06B6D4]"></div>
+                        </button>
+                        <button
+                            :class="active === 3 ? 'ring ring-offset-1 ring-[#f72585]' : ''"
+                            x-on:click="active = 3; setPrimary('333', '85%', '56%'); setSecondary('263', '93%', '35%');"
+                            class="relative w-6 h-6 overflow-hidden transition-all -rotate-45 rounded-full hover:scale-110"
+                        >
+                            <div class="h-3 w-6 bg-[#f72585]"></div>
+                            <div class="h-3 w-6 bg-[#480ca8]"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <nav class="fixed inset-x-0 top-0 z-20">
+    <div
+        x-data="{ navOpen: false, scrolledFromTop: false, mobileOpen: false }"
+        x-init="window.pageYOffset >= 50 ? scrolledFromTop = true : scrolledFromTop = false"
+        @scroll.window="window.pageYOffset >= 50 ? scrolledFromTop = true : scrolledFromTop = false"
+        :class="{'translate-y-0 h-24 xl:h-44': !scrolledFromTop, 'h-24 shadow-magical': scrolledFromTop}"
+        class="relative transition-all duration-200 bg-white"
+    >
+        <!-- Desktop Navigation -->
+        <div class="h-full px-4 mx-auto transition duration-200 max-w-7xl sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-full">
+                <div class="flex items-center">
+                    <!-- Logo -->
+                    <div
+                        :class="{'scale-100': !scrolledFromTop, 'xl:scale-50': scrolledFromTop}"
+                        class="flex items-center h-full transition-all duration-200 origin-left"
+                    >
+                        <!-- Logo Link -->
+                        <a
+                            href="#"
+                            class="flex items-center justify-center flex-shrink-0 pr-5 bg-white rounded-md  focus:ring-2 focus:outline-none ring-primary ring-opacity-75 ring-offset-2"
+                        >
+                            <img
+                                class="h-[80px] xl:h-[150px] scale-100 origin-left transition w-auto"
+                                src="https://landing-page-app-hero-images.s3.amazonaws.com/media/5d4cfc97-5656-4cea-bdd9-f534b3093215.jpeg"
+                                alt="Brand Logo"
+                            />
+                        </a>
+                    </div>
+                    <!-- Links -->
+                    <div
+                        :class="{'h-16': !scrolledFromTop, 'h-16 -translate-x-24': scrolledFromTop}"
+                        class="hidden transition-all duration-200 xl:ml-6 xl:flex xl:space-x-5"
+                    >
+                    
+                            <div
+                                class="relative flex items-center"
+                                x-trap.inert="desktopOpen"
+                                x-data="{ desktopOpen: false }"
+                                @keydown.escape.stop="desktopOpen = false"
+                                @click.away="desktopOpen = false"
+                            >
+                            <!-- <div>navitem_1</div>  -->
+                                <!-- We decide between direct link and dropdown here -->
+                                <!-- <if condition="item.links"> -->
+                                
+                                    <a
+                                        href=" index "
+                                        class=" 'border-secondary'  group pb-5 pt-6 inline-flex items-center px-1 transition text-sm font-medium border-b-2 focus:ring-2 focus:outline-none ring-primary ring-opacity-75 ring-offset-2"
+                                    >
+                                        Home
+                                    </a>
+                                <!-- </else> -->
+                                
+                                
+                                
+                            </div>
+                        <!-- </each> -->
+                        
+                            <div
+                                class="relative flex items-center"
+                                x-trap.inert="desktopOpen"
+                                x-data="{ desktopOpen: false }"
+                                @keydown.escape.stop="desktopOpen = false"
+                                @click.away="desktopOpen = false"
+                            >
+                            <!-- <div>navitem_2</div>  -->
+                                <!-- We decide between direct link and dropdown here -->
+                                <!-- <if condition="item.links"> -->
+                                
+                                    <button
+                                        type="button"
+                                        aria-haspopup="true"
+                                        :aria-expanded="desktopOpen"
+                                        aria-controls="navitem_2"
+                                        @click="desktopOpen = !desktopOpen"
+                                        class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 transition border-b-2 border-transparent  focus-visible:ring-2 focus:outline-none ring-primary group hover:text-gray-900 ring-opacity-75 ring-offset-2"
+                                    >
+                                        <span>Services</span>
+                                        <svg
+                                            class="w-5 h-5 ml-2 text-gray-400 transition-transform duration-300 group-hover:text-gray-500"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                            :class="{ '-rotate-180': desktopOpen }"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                    </button>
+                                <!-- </if> -->
+                                <!-- <else> -->
+                                
+                                
+                                    <div
+                                        x-cloak
+                                        x-show="desktopOpen"
+                                        x-transition:enter="transition ease-out duration-200"
+                                        x-transition:enter-start="opacity-0 translate-y-1"
+                                        x-transition:enter-end="opacity-100 translate-y-0"
+                                        x-transition:leave="transition ease-in duration-150"
+                                        x-transition:leave-start="opacity-100 translate-y-0"
+                                        x-transition:leave-end="opacity-0 translate-y-1"
+                                        id="navitem_2"
+                                        role="menu"
+                                        class="absolute z-20 w-screen max-w-xs px-2 mt-3 transform -translate-x-1/2 top-12 left-1/2 sm:px-0"
+                                        aria-orientation="vertical"
+                                    >
+                                        <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                                            <div class="relative grid gap-6 px-5 py-6 bg-white sm:gap-8 sm:p-8">
+                                                <!-- Render each sublink -->
+                                                <!-- <each loop="link in [{&#x27;title&#x27;: &quot;The Exterior Detailing service provides a hardworking, reasonable price, and attention to detail for your car&#x27;s exterior. We will clean and polish your car&#x27;s body, windows, and tires to make it look like new again.&quot;, &#x27;copy&#x27;: &#x27;Exterior Detailing&#x27;, &#x27;href&#x27;: &#x27;service-Exterior-Detailing&#x27;}, {&#x27;title&#x27;: &quot;Our Paint Polishing service is perfect for those who want their car&#x27;s paint looking as good as new again. Our team of hardworking professionals will work diligently to restore your paint to its original condition. We offer a reasonable price, and we pay close attention to detail so that the job is done right.&quot;, &#x27;copy&#x27;: &#x27;Paint Polishing&#x27;, &#x27;href&#x27;: &#x27;service-Paint-Polishing&#x27;}, {&#x27;title&#x27;: &quot;The Paint Correction service is tailored to each individual&#x27;s needs and is licensed and knowledgeable. We use the latest technology and products to correct paint imperfections, and our team is dedicated to providing the best service possible.&quot;, &#x27;copy&#x27;: &#x27;Paint Correction&#x27;, &#x27;href&#x27;: &#x27;service-Paint-Correction&#x27;}, {&#x27;title&#x27;: &#x27;The Ceramic Coating service is a trusted and experienced service that provides detailed and precise work. We take great care in our work, ensuring that every surface is coated perfectly and that your vehicle is protected for years to come.&#x27;, &#x27;copy&#x27;: &#x27;Ceramic Coating&#x27;, &#x27;href&#x27;: &#x27;service-Ceramic-Coating&#x27;}, {&#x27;title&#x27;: &#x27;The Interior Detailing service is tailored to your specific needs and provides you with a knowledgeable and licensed professional to take care of all of your interior cleaning and detailing needs. From carpets to windows, we will make sure your home looks and smells fresh and clean.&#x27;, &#x27;copy&#x27;: &#x27;Interior Detailing&#x27;, &#x27;href&#x27;: &#x27;service-Interior-Detailing&#x27;}, {&#x27;title&#x27;: &#x27;Our Headlight Restoration service will expertly and thoroughly clean your headlights, removing all the oxidation, yellowing, and other blemishes that have built up over time. We will then seal them to protect them from future damage.&#x27;, &#x27;copy&#x27;: &#x27;Headlight Restoration&#x27;, &#x27;href&#x27;: &#x27;service-Headlight-Restoration&#x27;}, {&#x27;title&#x27;: &#x27;Aluminum Polishing is a service that provides high-quality polishing for your vehicles aluminum surfaces. We are hardworking and take pride in our attention to detail, ensuring that those surfaces are polished to perfection. Our reasonable price makes us the perfect choice for your aluminum polishing needs.&#x27;, &#x27;copy&#x27;: &#x27;Aluminum Polishing&#x27;, &#x27;href&#x27;: &#x27;service-Aluminum-Polishing&#x27;}]"> -->
+                                                  
+                                                    <a
+                                                        href=" service-Exterior-Detailing "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">The Exterior Detailing service provides a hardworking, reasonable price, and attention to detail for your car&#x27;s exterior. We will clean and polish your car&#x27;s body, windows, and tires to make it look like new again.</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Exterior Detailing</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                                 
+                                                    <a
+                                                        href=" service-Paint-Polishing "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">Our Paint Polishing service is perfect for those who want their car&#x27;s paint looking as good as new again. Our team of hardworking professionals will work diligently to restore your paint to its original condition. We offer a reasonable price, and we pay close attention to detail so that the job is done right.</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Paint Polishing</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                                 
+                                                    <a
+                                                        href=" service-Paint-Correction "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">The Paint Correction service is tailored to each individual&#x27;s needs and is licensed and knowledgeable. We use the latest technology and products to correct paint imperfections, and our team is dedicated to providing the best service possible.</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Paint Correction</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                                 
+                                                    <a
+                                                        href=" service-Ceramic-Coating "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">The Ceramic Coating service is a trusted and experienced service that provides detailed and precise work. We take great care in our work, ensuring that every surface is coated perfectly and that your vehicle is protected for years to come.</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Ceramic Coating</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                                 
+                                                    <a
+                                                        href=" service-Interior-Detailing "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">The Interior Detailing service is tailored to your specific needs and provides you with a knowledgeable and licensed professional to take care of all of your interior cleaning and detailing needs. From carpets to windows, we will make sure your home looks and smells fresh and clean.</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Interior Detailing</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                                 
+                                                    <a
+                                                        href=" service-Headlight-Restoration "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">Our Headlight Restoration service will expertly and thoroughly clean your headlights, removing all the oxidation, yellowing, and other blemishes that have built up over time. We will then seal them to protect them from future damage.</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Headlight Restoration</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                                 
+                                                    <a
+                                                        href=" service-Aluminum-Polishing "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">Aluminum Polishing is a service that provides high-quality polishing for your vehicles aluminum surfaces. We are hardworking and take pride in our attention to detail, ensuring that those surfaces are polished to perfection. Our reasonable price makes us the perfect choice for your aluminum polishing needs.</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Aluminum Polishing</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- </if> -->
+                                
+                                
+                            </div>
+                        <!-- </each> -->
+                        
+                            <div
+                                class="relative flex items-center"
+                                x-trap.inert="desktopOpen"
+                                x-data="{ desktopOpen: false }"
+                                @keydown.escape.stop="desktopOpen = false"
+                                @click.away="desktopOpen = false"
+                            >
+                            <!-- <div>navitem_3</div>  -->
+                                <!-- We decide between direct link and dropdown here -->
+                                <!-- <if condition="item.links"> -->
+                                
+                                    <button
+                                        type="button"
+                                        aria-haspopup="true"
+                                        :aria-expanded="desktopOpen"
+                                        aria-controls="navitem_3"
+                                        @click="desktopOpen = !desktopOpen"
+                                        class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 transition border-b-2 border-transparent  focus-visible:ring-2 focus:outline-none ring-primary group hover:text-gray-900 ring-opacity-75 ring-offset-2"
+                                    >
+                                        <span>Galleries</span>
+                                        <svg
+                                            class="w-5 h-5 ml-2 text-gray-400 transition-transform duration-300 group-hover:text-gray-500"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                            :class="{ '-rotate-180': desktopOpen }"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                    </button>
+                                <!-- </if> -->
+                                <!-- <else> -->
+                                
+                                
+                                    <div
+                                        x-cloak
+                                        x-show="desktopOpen"
+                                        x-transition:enter="transition ease-out duration-200"
+                                        x-transition:enter-start="opacity-0 translate-y-1"
+                                        x-transition:enter-end="opacity-100 translate-y-0"
+                                        x-transition:leave="transition ease-in duration-150"
+                                        x-transition:leave-start="opacity-100 translate-y-0"
+                                        x-transition:leave-end="opacity-0 translate-y-1"
+                                        id="navitem_3"
+                                        role="menu"
+                                        class="absolute z-20 w-screen max-w-xs px-2 mt-3 transform -translate-x-1/2 top-12 left-1/2 sm:px-0"
+                                        aria-orientation="vertical"
+                                    >
+                                        <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                                            <div class="relative grid gap-6 px-5 py-6 bg-white sm:gap-8 sm:p-8">
+                                                <!-- Render each sublink -->
+                                                <!-- <each loop="link in [{&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Exterior&#x27;, &#x27;href&#x27;: &#x27;gallery-Exterior&#x27;}, {&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Interior&#x27;, &#x27;href&#x27;: &#x27;gallery-Interior&#x27;}, {&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Awards&#x27;, &#x27;href&#x27;: &#x27;gallery-Awards&#x27;}, {&#x27;title&#x27;: &#x27;All Photos&#x27;, &#x27;copy&#x27;: &#x27;All Photos&#x27;, &#x27;href&#x27;: &#x27;gallery-All&#x27;}]"> -->
+                                                  
+                                                    <a
+                                                        href=" gallery-Exterior "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Exterior</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                                 
+                                                    <a
+                                                        href=" gallery-Interior "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Interior</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                                 
+                                                    <a
+                                                        href=" gallery-Awards "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Awards</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                                 
+                                                    <a
+                                                        href=" gallery-All "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">All Photos</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">All Photos</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- </if> -->
+                                
+                                
+                            </div>
+                        <!-- </each> -->
+                        
+                            <div
+                                class="relative flex items-center"
+                                x-trap.inert="desktopOpen"
+                                x-data="{ desktopOpen: false }"
+                                @keydown.escape.stop="desktopOpen = false"
+                                @click.away="desktopOpen = false"
+                            >
+                            <!-- <div>navitem_4</div>  -->
+                                <!-- We decide between direct link and dropdown here -->
+                                <!-- <if condition="item.links"> -->
+                                
+                                    <a
+                                        href=" reviews "
+                                        class=" 'border-transparent hover:border-gray-300 hover:text-gray-700 text-gray-500'  group pb-5 pt-6 inline-flex items-center px-1 transition text-sm font-medium border-b-2 focus:ring-2 focus:outline-none ring-primary ring-opacity-75 ring-offset-2"
+                                    >
+                                        Reviews
+                                    </a>
+                                <!-- </else> -->
+                                
+                                
+                                
+                            </div>
+                        <!-- </each> -->
+                        
+
+                    </div>
+                </div>
+                <!-- Mobile Button -->
+                <div class="flex flex-col items-center text-gray-500 xl:hidden">
+                    <span>Menu</span>
+                    <button @click="mobileOpen = !mobileOpen" class="p-2">
+                        <span hidden class="sr-only">Open/CLose menu TODO:</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Side Content -->
+                <div class="items-center hidden space-x-5 xl:flex">
+                    <p :class="{'translate-x-0': !scrolledFromTop, 'translate-x-12': scrolledFromTop}" class="text-gray-500 transition-transform">
+                        
+                    </p>
+                    <!-- CTA Primary -->
+                    <div class="w-full sm:w-auto">
+                        
+                        <div class="w-full sm:w-auto">
+                            <button
+                            :class="{'scale-100': !scrolledFromTop, 'scale-75 translate-x-8': scrolledFromTop}"
+                            @click="contactModalOpen = true"
+                                class="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium transition border-2 border-transparent rounded-md  text-primary-foreground focus:outline-none hover:bg-primary-darker sm:w-auto bg-primary focus-visible:ring-2 ring-primary ring-opacity-75 ring-offset-2"
+                                >
+                                Send Us a Text
+                            </button>
+                        </div> 
+                        
+                            
+                     
+                    
+                    
+                    
+                    
+                    </div>
+                    <!-- CTA Primary-Invert -->
+                    <div class="inline-flex w-full ml-3 sm:w-auto">
+                        
+                        <div class="inline-flex w-full ml-3 sm:w-auto">
+                            <a
+                                target = "_blank" 
+                                href="tel:+1 321-806-8870"
+                                :class="{'scale-100': !scrolledFromTop, 'scale-75': scrolledFromTop}"
+                                class="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium transition bg-white border-2 rounded-md  hover:bg-primary hover:bg-opacity-10 focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 sm:w-auto text-primary border-primary"
+                                >
+                                Give Us a Call
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div
+            x-cloak
+            x-show="mobileOpen"
+            x-trap.inert.noscroll="mobileOpen"
+            x-transition:enter="duration-150 ease-out"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="duration-100 ease-in"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-95"
+            class="fixed inset-0 z-30 h-screen p-2 overflow-y-scroll transition origin-top-right transform xl:hidden"
+        >
+            <div class="overflow-hidden bg-white rounded-lg shadow-md ring-1 ring-black ring-opacity-5">
+                <div class="flex items-center justify-between px-5 pt-4">
+                    <div>
+                        <!-- Logo Link -->
+                        <a
+                            href="/"
+                            class="flex items-center justify-center flex-shrink-0 bg-white rounded-b-lg focus-visible:ring focus:outline-none ring-primary"
+                        >
+                            <img class="h-[80px]" src="https://landing-page-app-hero-images.s3.amazonaws.com/media/5d4cfc97-5656-4cea-bdd9-f534b3093215.jpeg" alt="Brand Logo" />
+                        </a>
+                    </div>
+                    <div class="-mr-2">
+                        <button
+                            @click="mobileOpen = false"
+                            type="button"
+                            class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md  focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                        >
+                            <span class="sr-only">Close menu</span>
+                            <!-- Heroicon name: outline/x -->
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <!-- Links and bottom CTA -->
+                <div class="overflow-y-scroll">
+                    <div x-data="{ openMenu: '' }" class="flex flex-col px-2 pt-2 pb-3 space-y-1">
+                        
+                            <div x-trap.inert="openMenu == 'navitem_1'">
+                                <!-- We decide between direct link and dropdown here -->
+                                
+                                    <a
+                                        href=" index "
+                                        class=" 'text-secondary'  block px-3 py-2 text-base font-medium rounded-md border-secondary transition"
+                                        >Home</a
+                                    >
+                                
+                                
+                            </div>
+                        <!-- </each> -->
+                      
+                            <div x-trap.inert="openMenu == 'navitem_2'">
+                                <!-- We decide between direct link and dropdown here -->
+                                
+                                    <!-- <if condition="item.links"> -->
+                                    <button
+                                        aria-haspopup="true"
+                                        :aria-expanded="openMenu == 'navitem_2'"
+                                        aria-controls="mobile-navitem_2"
+                                        @click="openMenu = openMenu == 'navitem_2' ? '' : 'navitem_2'"
+                                        class="relative inline-flex items-center w-full px-3 py-2 overflow-hidden text-base font-medium text-gray-700 transition rounded-md  border-secondary"
+                                        :class="openMenu == 'navitem_2' ? 'z-30' : 'z-0'"
+                                    >
+                                        <span>Services</span>
+                                        <svg
+                                            class="w-5 h-5 ml-2 text-gray-400 transition-transform duration-300"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                            :class="{ '-rotate-180': openMenu == 'navitem_2' }"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                    </button>
+                                
+                                
+                                    <!-- <if condition="item.links"> -->
+                                    <!-- Expandable Menu -->
+                                    <div
+                                        x-cloak
+                                        x-show="openMenu == 'navitem_2'"
+                                        x-collapse
+                                        id="mobile-navitem_2"
+                                        role="menu"
+                                        class="z-20 pt-1 pb-2"
+                                        aria-orientation="vertical"
+                                    >
+                                        <div class="relative grid gap-6 px-5 py-2 bg-white rounded-lg">
+                                            <!-- Render each sublink -->
+                                            
+                                                <a href="service-Exterior-Detailing" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">The Exterior Detailing service provides a hardworking, reasonable price, and attention to detail for your car&#x27;s exterior. We will clean and polish your car&#x27;s body, windows, and tires to make it look like new again.</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Exterior Detailing</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                                <a href="service-Paint-Polishing" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">Our Paint Polishing service is perfect for those who want their car&#x27;s paint looking as good as new again. Our team of hardworking professionals will work diligently to restore your paint to its original condition. We offer a reasonable price, and we pay close attention to detail so that the job is done right.</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Paint Polishing</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                                <a href="service-Paint-Correction" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">The Paint Correction service is tailored to each individual&#x27;s needs and is licensed and knowledgeable. We use the latest technology and products to correct paint imperfections, and our team is dedicated to providing the best service possible.</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Paint Correction</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                                <a href="service-Ceramic-Coating" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">The Ceramic Coating service is a trusted and experienced service that provides detailed and precise work. We take great care in our work, ensuring that every surface is coated perfectly and that your vehicle is protected for years to come.</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Ceramic Coating</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                                <a href="service-Interior-Detailing" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">The Interior Detailing service is tailored to your specific needs and provides you with a knowledgeable and licensed professional to take care of all of your interior cleaning and detailing needs. From carpets to windows, we will make sure your home looks and smells fresh and clean.</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Interior Detailing</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                                <a href="service-Headlight-Restoration" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">Our Headlight Restoration service will expertly and thoroughly clean your headlights, removing all the oxidation, yellowing, and other blemishes that have built up over time. We will then seal them to protect them from future damage.</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Headlight Restoration</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                                <a href="service-Aluminum-Polishing" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">Aluminum Polishing is a service that provides high-quality polishing for your vehicles aluminum surfaces. We are hardworking and take pride in our attention to detail, ensuring that those surfaces are polished to perfection. Our reasonable price makes us the perfect choice for your aluminum polishing needs.</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Aluminum Polishing</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        <!-- </each> -->
+                      
+                            <div x-trap.inert="openMenu == 'navitem_3'">
+                                <!-- We decide between direct link and dropdown here -->
+                                
+                                    <!-- <if condition="item.links"> -->
+                                    <button
+                                        aria-haspopup="true"
+                                        :aria-expanded="openMenu == 'navitem_3'"
+                                        aria-controls="mobile-navitem_3"
+                                        @click="openMenu = openMenu == 'navitem_3' ? '' : 'navitem_3'"
+                                        class="relative inline-flex items-center w-full px-3 py-2 overflow-hidden text-base font-medium text-gray-700 transition rounded-md  border-secondary"
+                                        :class="openMenu == 'navitem_3' ? 'z-30' : 'z-0'"
+                                    >
+                                        <span>Galleries</span>
+                                        <svg
+                                            class="w-5 h-5 ml-2 text-gray-400 transition-transform duration-300"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                            :class="{ '-rotate-180': openMenu == 'navitem_3' }"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                    </button>
+                                
+                                
+                                    <!-- <if condition="item.links"> -->
+                                    <!-- Expandable Menu -->
+                                    <div
+                                        x-cloak
+                                        x-show="openMenu == 'navitem_3'"
+                                        x-collapse
+                                        id="mobile-navitem_3"
+                                        role="menu"
+                                        class="z-20 pt-1 pb-2"
+                                        aria-orientation="vertical"
+                                    >
+                                        <div class="relative grid gap-6 px-5 py-2 bg-white rounded-lg">
+                                            <!-- Render each sublink -->
+                                            
+                                                <a href="gallery-Exterior" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Exterior</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                                <a href="gallery-Interior" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Interior</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                                <a href="gallery-Awards" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Awards</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                                <a href="gallery-All" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">All Photos</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">All Photos</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        <!-- </each> -->
+                      
+                            <div x-trap.inert="openMenu == 'navitem_4'">
+                                <!-- We decide between direct link and dropdown here -->
+                                
+                                    <a
+                                        href=" reviews "
+                                        class=" 'text-gray-700'  block px-3 py-2 text-base font-medium rounded-md border-secondary transition"
+                                        >Reviews</a
+                                    >
+                                
+                                
+                            </div>
+                        <!-- </each> -->
+                      
+                    </div>
+                    <!-- Bottom CTAs -->
+                    <div class="p-1 bg-gray-50">
+                        <a
+                            href="#"
+                            class="relative block w-full px-5 py-3 font-medium text-center rounded-md  focus:outline-none focus:ring focus:z-10 text-secondary bg-gray-50 hover:bg-gray-100"
+                            >
+                            Text Booking
+                            <!-- text -->
+                            <!-- are these 2 correct? -->
+                            </a
+                        >
+                        <a
+                            href="#"
+                            class="relative block w-full px-5 py-3 font-medium text-center rounded-md  focus:outline-none focus:ring focus:z-10 text-secondary bg-gray-50 hover:bg-gray-100"
+                            >
+                            
+                            <!-- none -->
+                            </a
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+        
+            
+                
+                    
+                        
+                    
+                        
+                    
+                        
+                            <!-- Our Best Work Component -->
+<section class="overflow-hidden bg-white">
+    <div class="relative px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:py-24 lg:px-8">
+        <!-- Heading -->
+        <h2>
+            <span class="block text-base font-semibold tracking-wide text-center uppercase text-secondary">Our Best Work</span>
+            <span class="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-center text-primary sm:text-4xl">Awards</span>
+        </h2>
+        <!-- Images Grid -->
+        <div class="relative mt-12">
+            <!-- This component adds a grid of gallery items and a modal to display full width images -->
+
+<!-- This are the parameters of the component. In the real python environment you want to call the component with the items as parameter -->
+<!-- <script locals>
+    module.exports = {
+        items: [
+            {
+                title: "Mowing | Austin, TX",
+                copy: "Cabin in the woods with a green background that’s a client. Landscaped, mowed lawn. Id irure voluptate ea et minim tempor cillum nisi voluptate Lorem ad enim pariatur. Ut mollit culpa est ipsum irure eiusmod consectetur cupidatat velit qui nisi officia. Exercitation nostrud dolor mollit elit eu exercitation voluptate reprehenderit tempor esse cupidatat.",
+                image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG91c2V8ZW58MHx8MHx8&auto=format&fit=crop&w=900&q=60",
+            },
+            { title: "Mowing | Austin, TX", copy: "Landscaping at a client’s home", image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8aG91c2V8ZW58MHx8MHx8&auto=format&fit=crop&w=900&q=60" },
+            { title: "Mowing | Austin, TX", copy: "Landscaping at a client’s home", image: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8aG91c2V8ZW58MHx8MHx8&auto=format&fit=crop&w=900&q=60" },
+            { title: "Mowing | Austin, TX", copy: "Landscaping at a client’s home", image: "https://images.unsplash.com/photo-1576941089067-2de3c901e126?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGhvdXNlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60" },
+            { title: "Mowing | Austin, TX", copy: "Landscaping at a client’s home", image: "https://images.unsplash.com/photo-1584738766473-61c083514bf4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGhvdXNlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60" },
+            { title: "Mowing | Austin, TX", copy: "Landscaping at a client’s home", image: "https://images.unsplash.com/photo-1582063289852-62e3ba2747f8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGhvdXNlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60" },
+        ],
+    };
+</script> -->
+
+<div
+    x-data="{
+        activeImage: 0,
+        amountOfImages: 2,
+        next() {
+            if (this.activeImage < this.amountOfImages - 1)
+                this.activeImage ++;
+        },
+        prev() {
+            if (this.activeImage > 0)
+                this.activeImage --;
+        },
+        loop() {
+            setInterval(() => { this.activeImage = this.activeImage === this.amountOfImages ? 1 : this.activeImage + 1 }, 5000)
+        },
+    }"
+>
+    <ul role="list" class="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-3 lg:gap-x-8">
+        
+            <!-- Single Item - We only want to show 3 items on mobile so we check the current index and attach a hidden class if necessary -->
+            <li x-cloak x-data="{ shown: false }" x-intersect.full="shown = true">
+                <div x-show="shown" x-transition:enter="transition duration-1000" x-transition:enter-start="transform translate-y-20" x-transition:enter-end="transform translate-y-0">
+                    <button @click="activeImage = 0; galleryModalOpen = true" class="block w-full h-full space-y-4 text-left rounded focus:outline-none focus-visible:ring ring-primary ring-offset-2 ring-opacity-75">
+                        <div class="aspect-w-3 aspect-h-2">
+                            <!-- <img class="object-cover rounded-lg shadow-lg" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/75f74cae-ce3d-4186-a6bb-8516314cd83f.jpeg" alt="" /> -->
+                             
+                                <img class="object-cover rounded-lg shadow-lg" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/75f74cae-ce3d-4186-a6bb-8516314cd83f.jpeg" alt="" />
+                                <!-- <img class="object-cover rounded-lg shadow-lg" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/75f74cae-ce3d-4186-a6bb-8516314cd83f.jpeg" alt="" /> -->
+                                <!-- <img class="object-cover rounded-lg shadow-lg" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/x/media/75f74cae-ce3d-4186-a6bb-8516314cd83f.jpeg" alt="" /> -->
+                            
+                        </div>
+
+                        <div class="space-y-1 text-lg font-medium leading-6">
+                            <p class="line-clamp-3"></p>
+                            <h3 class="text-primary"></h3>
+                        </div>
+                    </button>
+                </div>
+            </li>
+        
+            <!-- Single Item - We only want to show 3 items on mobile so we check the current index and attach a hidden class if necessary -->
+            <li x-cloak x-data="{ shown: false }" x-intersect.full="shown = true">
+                <div x-show="shown" x-transition:enter="transition duration-1000" x-transition:enter-start="transform translate-y-20" x-transition:enter-end="transform translate-y-0">
+                    <button @click="activeImage = 1; galleryModalOpen = true" class="block w-full h-full space-y-4 text-left rounded focus:outline-none focus-visible:ring ring-primary ring-offset-2 ring-opacity-75">
+                        <div class="aspect-w-3 aspect-h-2">
+                            <!-- <img class="object-cover rounded-lg shadow-lg" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/eb8b11df-b0a0-4c0a-adb1-4bbbff6a5fd4.jpeg" alt="" /> -->
+                             
+                                <img class="object-cover rounded-lg shadow-lg" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/eb8b11df-b0a0-4c0a-adb1-4bbbff6a5fd4.jpeg" alt="" />
+                                <!-- <img class="object-cover rounded-lg shadow-lg" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/eb8b11df-b0a0-4c0a-adb1-4bbbff6a5fd4.jpeg" alt="" /> -->
+                                <!-- <img class="object-cover rounded-lg shadow-lg" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/x/media/eb8b11df-b0a0-4c0a-adb1-4bbbff6a5fd4.jpeg" alt="" /> -->
+                            
+                        </div>
+
+                        <div class="space-y-1 text-lg font-medium leading-6">
+                            <p class="line-clamp-3"></p>
+                            <h3 class="text-primary"></h3>
+                        </div>
+                    </button>
+                </div>
+            </li>
+        
+    </ul>
+
+    <!-- Gallery Modal -->
+    <template x-teleport="body">
+        <div x-cloak x-show="galleryModalOpen" @keydown.escape.prevent.stop="galleryModalOpen = false" role="dialog" aria-modal="true" x-id="['modal-title']" :aria-labelledby="$id('modal-title')" class="fixed inset-0 z-40 pt-8 pb-20" x-trap.noscroll.inert="galleryModalOpen">
+            <!-- Overlay -->
+            <div x-show="galleryModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" aria-hidden="true" class="fixed inset-0 bg-black bg-opacity-50"></div>
+            <!-- Panel -->
+            <div
+                x-show="galleryModalOpen"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                @click="galleryModalOpen = false"
+                class="relative flex items-center justify-center w-full h-full"
+            >
+                <div @click.stop class="flex flex-col w-full max-h-full pb-12 mx-6 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:px-4 sm:my-8 sm:align-middle sm:max-w-5xl">
+                    <!-- Header -->
+                    <div class="relative h-16 px-6 bg-white">
+                        <!-- Title -->
+                        <h2 class="sr-only" :id="$id('modal-title')">Modal Gallery</h2>
+
+                        <button @click="galleryModalOpen = false;" class="absolute p-1 transition rounded top-5 right-1 hover:bg-gray-100 focus-visible:ring-2 focus:outline-none ring-primary ring-opacity-75 ring-offset-2">
+                            <span class="sr-only">Close modal</span>
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-col w-full">
+                        <div @keydown.right="next" @keydown.left="prev" tabindex="0" role="region" aria-labelledby="carousel-label" class="w-full z-10 flex space-x-6 focus:outline-none focus-visible:ring-2 ring-primary ring-offset-2 ring-opacity-75 ">
+                            <h2 id="carousel-label" class="sr-only" hidden>Carousel</h2>
+
+                            <button :class="activeImage > 0 ? 'opacity-100' : 'opacity-0'" @click="prev" class="text-6xl transition-opacity focus:outline-none focus-visible:ring-2 ring-primary ring-offset-2 ring-opacity-75">
+                                <svg aria-hidden="true" class="w-6 h-6" fill="none">
+                                    <path d="m10 19-7-7m0 0 7-7m-7 7h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <span class="sr-only">Skip to previous slide</span>
+                            </button>
+
+                            <span id="carousel-content-label" class="sr-only" hidden>Carousel</span>
+
+                            <ul tabindex="0" role="listbox" aria-labelledby="carousel-content-label" class="relative w-full">
+                                
+                                    <!-- Transition Wrapper 1 -->
+                                    <li class="flex flex-col" x-show="activeImage === 0">
+                                            
+                                            <img class="mt-2 lg:h-[481px] h-[200px] sm:h-[300px] self-center rounded-md object-cover"  src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/75f74cae-ce3d-4186-a6bb-8516314cd83f.jpeg" alt="placeholder image" />
+                                            <p lorem="1" class="mt-3 text-gray-500"></p>
+                                        
+                                    </li>
+                                
+                                    <!-- Transition Wrapper 1 -->
+                                    <li class="flex flex-col" x-show="activeImage === 1">
+                                            
+                                            <img class="mt-2 lg:h-[481px] h-[200px] sm:h-[300px] self-center rounded-md object-cover"  src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/eb8b11df-b0a0-4c0a-adb1-4bbbff6a5fd4.jpeg" alt="placeholder image" />
+                                            <p lorem="1" class="mt-3 text-gray-500"></p>
+                                        
+                                    </li>
+                                
+                            </ul>
+
+                            <button :class="activeImage < amountOfImages - 1 ? 'opacity-100' : 'opacity-0'" @click="next" class="text-6xl transition-opacity focus:outline-none focus-visible:ring-2 ring-primary ring-offset-2 ring-opacity-75">
+                                <svg aria-hidden="true" class="w-6 h-6" fill="none">
+                                    <path d="m14 5 7 7m0 0-7 7m7-7H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <span class="sr-only">Skip to next slide</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</div>
+
+        </div>
+    </div>
+</section>
+
+                        
+                    
+                
+            
+        
+            <!-- CTA Component -->
+<section class="bg-white">
+    <div class="px-4 py-12 mx-auto text-center max-w-7xl sm:px-6 lg:py-16 lg:px-8">
+        <!-- Heading -->
+        <h2 class="text-3xl font-extrabold sm:text-4xl">
+            <span class="block">Ready to get started?</span>
+            <span class="block">Book an appointment today.</span>
+        </h2>
+        <!-- CTAs -->
+        <div class="flex justify-center mt-8">
+            <!-- CTA Primary -->
+            
+            
+            <div class="w-full sm:w-auto">
+                <button
+                    @click="contactModalOpen = true"
+                    class="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium text-white transition border-2 border-transparent rounded-md  sm:py-4 sm:px-10 hover:bg-primary-darker focus:outline-none focus-visible:ring-2 ring-primary ring-offset-2 ring-opacity-75 sm:w-auto bg-primary"
+                    >
+                    Text Booking
+                </button>
+            </div> 
+            
+                
+            
+<!--             
+            <div class="w-full sm:w-auto">
+                <button
+                @click="contactModalOpen = true"
+                class="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium text-white transition border-2 border-transparent rounded-md  sm:py-4 sm:px-10 hover:bg-primary-darker focus:outline-none focus-visible:ring-2 ring-primary ring-offset-2 ring-opacity-75 sm:w-auto bg-primary"
+                >
+                    Text Us
+            </button>
+            </div>
+            <div class="inline-flex w-full ml-3 sm:w-auto">
+                <a
+                    href="#"
+                    class="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium transition bg-white border-2 rounded-md  sm:py-4 sm:px-10 hover:bg-primary hover:bg-opacity-10 focus:outline-none focus:ring-2 ring-primary ring-offset-2 ring-opacity-75 sm:w-auto text-primary border-primary"
+                >
+                    Book Now
+                </a>
+            </div> -->
+        </div>
+    </div>
+</section>
+
+            <!-- Footer Component -->
+<footer class="bg-white" aria-labelledby="footer-heading">
+    <h2 id="footer-heading" class="sr-only">Footer</h2>
+    <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:pt-16 lg:pb-10 lg:px-8">
+        <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+            <!-- Image, description and logos -->
+            <div class="space-y-8 xl:col-span-1">
+                
+                <img class="h-[80px]" src="https://landing-page-app-hero-images.s3.amazonaws.com/media/5d4cfc97-5656-4cea-bdd9-f534b3093215.jpeg" alt="" />
+                
+                <p class="text-base text-gray-500">
+                    The finest Auto Detailing service in Cocoa and surrounding areas. We provide professional service and offer free quotes. Reach out today to learn how we can help.
+                    <!-- Is this supposed to be here and correct?  -->
+                    <!-- The finest landscaping in Austin & surrounding areas. Exceptional, professional service. You are our priority! -->
+                </p>
+                <div class="flex space-x-6">
+                    <!-- are these conditional? and linked to corret links? -->
+                    
+                    <a href="https://facebook.com/PicturePerfectMobileDetailing" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 ring-primary ring-opacity-75">
+                        <span class="sr-only">Facebook</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                fill-rule="evenodd"
+                                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                                clip-rule="evenodd"
+                            />
+                        </svg>
+                    </a>
+                    
+                    
+                    <a href="https://www.instagram.com/pictureperfectdetailingllc/" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 ring-primary ring-opacity-75">
+                        <span class="sr-only">Instagram</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                fill-rule="evenodd"
+                                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                                clip-rule="evenodd"
+                            />
+                        </svg>
+                    </a>
+                    
+                    
+                    <!-- <a href="" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 ring-primary ring-opacity-75">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                fill-rule="evenodd"
+                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                                clip-rule="evenodd"
+                            />
+                        </svg>
+                    </a> -->
+                    
+                    
+                    
+                    <a href="https://www.google.com/search?q=picture+perfect+detailing+llc&amp;ei=sY_oYYL-DJGtqtsPpqal0A0&amp;ved=0ahUKEwjCmsfU7b71AhWRlmoFHSZTCdoQ4dUDCA4&amp;uact=5&amp;oq=picture+perfect+detailing+llc&amp;gs_lcp=Cgdnd3Mtd2l6EAMyCQgAEMkDEBYQHjoKCAAQRxCwAxDJAzoHCAAQRxCwAzoGCAAQFhAeOggIABCGAxCLAzoICCEQFhAdEB5KBAhBGABKBAhGGABQpARYsBZgrBdoB3AAeACAAWGIAaoGkgECMTCYAQCgAQHIAQS4AQLAAQE&amp;sclient=gws-wiz#lrd=0x88e0ad0203de8665:0x42b10c90a63c7533,1,,," class="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 ring-primary ring-opacity-75">
+                        <span class="sr-only">Google</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20 10.2222C20 9.40001 19.9319 8.80001 19.7846 8.1778H10.2041V11.8889H15.8276C15.7143 12.8111 15.1021 14.2 13.7415 15.1333L13.7224 15.2575L16.7516 17.5573L16.9615 17.5778C18.8889 15.8333 20 13.2667 20 10.2222Z" fill="#9CA3AF"/>
+                            <path d="M10.2041 20C12.9591 20 15.272 19.1111 16.9614 17.5778L13.7414 15.1333C12.8798 15.7222 11.7233 16.1333 10.2041 16.1333C7.50566 16.1333 5.21542 14.3889 4.39902 11.9778L4.27935 11.9877L1.12957 14.3766L1.08838 14.4889C2.76637 17.7555 6.21309 20 10.2041 20Z" fill="#9CA3AF"/>
+                            <path d="M4.39905 11.9778C4.18363 11.3556 4.05897 10.6889 4.05897 10C4.05897 9.3111 4.18363 8.64446 4.38772 8.02225L4.38201 7.88973L1.19276 5.46246L1.08841 5.5111C0.39683 6.86668 0 8.38893 0 10C0 11.6111 0.39683 13.1333 1.08841 14.4889L4.39905 11.9778Z" fill="#9CA3AF"/>
+                            <path d="M10.2041 3.86664C12.1201 3.86664 13.4126 4.67775 14.1496 5.35557L17.0294 2.6C15.2608 0.988893 12.9591 0 10.2041 0C6.21309 0 2.76637 2.24443 1.08838 5.51107L4.38769 8.02221C5.21542 5.61111 7.50566 3.86664 10.2041 3.86664Z" fill="#9CA3AF"/>
+                        </svg>    
+                    </a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            <!-- Links -->
+            <div class="grid grid-cols-2 gap-8 mt-12 xl:mt-0 xl:col-span-2">
+                <!-- First two footer items -->
+                <div class="md:grid md:grid-cols-2 md:gap-8">
+                    <!-- Company Links -->
+                    <div>
+                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Company</h3>
+                        <ul role="list" class="mt-4 -mx-1 space-y-4">
+                            <li>
+                                <a
+                                    href="#"
+                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                    >Home</a
+                                >
+                            </li>
+                            
+                                
+                                <li>
+                                    <a
+                                        href="#gallery"
+                                        class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                        >Gallery</a
+                                    >
+                                </li>
+                                
+                            
+                            
+                            <li>
+                                <a
+                                    href="reviews"
+                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                    >Reviews</a
+                                >
+                            </li>
+                            
+                            
+                            
+                        </ul>
+                    </div>
+                    <!-- Services Links -->
+                    <div class="mt-12 md:mt-0">
+                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Services</h3>
+                        <ul role="list" class="mt-4 -mx-1 space-y-4">
+                            
+                            <li>
+                                <a
+                                    href="service-Exterior-Detailing"
+                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                    >Exterior Detailing</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="service-Paint-Polishing"
+                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                    >Paint Polishing</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="service-Paint-Correction"
+                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                    >Paint Correction</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="service-Ceramic-Coating"
+                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                    >Ceramic Coating</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="service-Interior-Detailing"
+                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                    >Interior Detailing</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="service-Headlight-Restoration"
+                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                    >Headlight Restoration</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="service-Aluminum-Polishing"
+                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                    >Aluminum Polishing</a
+                                >
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <!-- Second two footer items -->
+                <div class="md:grid md:grid-cols-2 md:gap-8">
+                    <!-- Locations Links -->
+                    <div>
+                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Locations</h3>
+                        <ul role="list" class="mt-4 -mx-1 space-y-4">
+                            
+                            <li>
+                                <a
+                                    href="#"
+                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                    >Cocoa, FL</a
+                                >
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    <!-- Hours Links -->
+                    <div class="mt-12 md:mt-0">
+                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Hours</h3>
+                        <ul role="list" class="mt-4 -mx-1 space-y-4">
+                            
+                            <li>
+                                <a
+                                    href="#"
+                                    class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
+                                    >Monday: 8:00am - 6:00pm</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="#"
+                                    class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
+                                    >Tuesday: 8:00am - 6:00pm</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="#"
+                                    class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
+                                    >Wednesday: 8:00am - 6:00pm</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="#"
+                                    class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
+                                    >Thursday: 8:00am - 6:00pm</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="#"
+                                    class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
+                                    >Friday: 8:00am - 6:00pm</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="#"
+                                    class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
+                                    >Saturday: 08:00am - 06:00pm</a
+                                >
+                            </li>
+                            
+                            <li>
+                                <a
+                                    href="#"
+                                    class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
+                                    >Sunday: 8:00am - 6:00pm</a
+                                >
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Part -->
+        <div class="pt-8 mt-12 text-center border-t border-gray-200">
+            <p class="inline-flex items-center text-base text-gray-400 xl:text-center">
+                Built with ♥ from
+                <a href="https://www.prophone.com" class="inline-block p-1 -m-1 ml-0.5 rounded focus:outline-none focus:ring-2 ring-primary ring-opacity-75">
+                    <span class="sr-only">ProPhone</span>
+                    <svg aria-hidden="true" width="95" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#a)">
+                            <path
+                                d="M.167 4.115c0-.23.183-.417.409-.417h7.842c.287 0 .485.294.381.567L2.927 19.734a.41.41 0 0 1-.381.266H.576a.413.413 0 0 1-.41-.416V4.114Z"
+                                fill="#E64D3D"
+                            />
+                            <path
+                                d="M15.56 15.885c0 .23-.182.417-.408.417H7.31a.416.416 0 0 1-.382-.567L12.8.266A.41.41 0 0 1 13.182 0h1.97c.226 0 .409.187.409.417v15.468Z"
+                                fill="#0D276A"
+                            />
+                            <path
+                                d="M23.284 15.573h1.963v-3.86h1.765c2.148 0 3.682-1.405 3.682-3.437 0-2.03-1.534-3.453-3.682-3.453h-3.729v10.75Zm1.963-9.125h1.489c1.135 0 1.933.735 1.933 1.828 0 1.078-.798 1.813-1.933 1.813h-1.489v-3.64Zm7.386 9.125h1.964v-5.219c.506-.656 1.197-1.015 1.841-1.015.23 0 .476.031.69.094V7.65a2.275 2.275 0 0 0-.644-.078c-.66 0-1.335.344-1.887.969v-.781h-1.964v7.812Zm5.509-3.906c0 2.39 1.642 4.094 3.959 4.094 2.316 0 3.943-1.703 3.943-4.094 0-2.406-1.627-4.094-3.943-4.094-2.317 0-3.959 1.688-3.959 4.094Zm2.01 0c0-1.438.798-2.422 1.949-2.422 1.135 0 1.933.985 1.933 2.422 0 1.438-.798 2.422-1.933 2.422-1.151 0-1.949-.985-1.949-2.422Z"
+                                fill="#E64D3D"
+                            />
+                            <path
+                                d="M48.283 15.573h1.963v-3.86h1.765c2.148 0 3.682-1.405 3.682-3.437 0-2.03-1.534-3.453-3.682-3.453h-3.728v10.75Zm1.963-9.125h1.489c1.135 0 1.933.735 1.933 1.828 0 1.079-.798 1.813-1.933 1.813h-1.489v-3.64Zm7.386 9.125h1.964v-5.422c.506-.546 1.074-.828 1.642-.828.797 0 1.35.594 1.35 1.422v4.828h1.98v-5.187c0-1.656-1.136-2.813-2.732-2.813-.782 0-1.55.297-2.24.86V4.339h-1.964v11.234Zm8.79-3.906c0 2.39 1.642 4.094 3.96 4.094 2.316 0 3.942-1.703 3.942-4.094 0-2.406-1.626-4.094-3.943-4.094s-3.958 1.688-3.958 4.094Zm2.01 0c0-1.438.798-2.422 1.95-2.422 1.134 0 1.932.985 1.932 2.422 0 1.438-.797 2.422-1.933 2.422-1.15 0-1.948-.985-1.948-2.422Zm7.824 3.906h1.964v-5.422c.506-.546 1.074-.828 1.642-.828.797 0 1.35.594 1.35 1.422v4.828h1.979v-5.187c0-1.656-1.135-2.813-2.731-2.813-.782 0-1.55.297-2.24.86V7.76h-1.964v7.812Zm8.79-3.969c0 2.438 1.627 4.157 3.944 4.157.859 0 1.733-.203 2.608-.61V13.48c-.798.468-1.58.734-2.286.734-1.289 0-2.21-.813-2.332-2h5.201c.03-.266.03-.516.03-.735 0-2.296-1.365-3.906-3.375-3.906-2.194 0-3.79 1.672-3.79 4.031Zm1.934-.687c.092-1.078.828-1.797 1.78-1.797.874 0 1.503.735 1.564 1.797H86.98Z"
+                                fill="#0D276A"
+                            />
+                        </g>
+                        <defs>
+                            <clipPath id="a"><path fill="#fff" transform="translate(.167)" d="M0 0h94.667v20H0z" /></clipPath>
+                        </defs>
+                    </svg>
+                </a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+            <!-- Modal -->
+<template x-teleport="body">
+    <div
+        x-show="contactModalOpen"
+        @keydown.escape.prevent.stop="contactModalOpen = false"
+        role="dialog"
+        aria-modal="true"
+        x-id="['modal-title']"
+        :aria-labelledby="$id('modal-title')"
+        class="fixed inset-0 z-40 pt-8 pb-20"
+        x-trap.noscroll.inert="contactModalOpen"
+    >
+        <!-- Overlay -->
+        <div
+            x-show="contactModalOpen"
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            aria-hidden="true"
+            class="fixed inset-0 bg-black bg-opacity-50"
+        ></div>
+        <!-- Panel -->
+        <div
+            x-show="contactModalOpen"
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            @click="contactModalOpen = false"
+            class="relative flex items-center justify-center w-full h-full"
+        >
+            <div
+                @click.stop
+                class="flex flex-col w-full max-h-full pb-3 mx-6 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl  sm:px-0 sm:my-8 sm:align-middle sm:max-w-sm"
+            >
+                <!-- Header -->
+                <div class="relative px-6 bg-white">
+                    <!-- Title -->
+                    <h2 class="mt-6 text-lg font-medium text-center" :id="$id('modal-title')">Send us a text</h2>
+                    <!-- Small overlay for scrolling area  -->
+                    <div aria-hidden="true" class="absolute inset-x-0 h-8 -bottom-8 bg-gradient-to-b from-white"></div>
+                    <button
+                        @click="contactModalOpen = false;"
+                        class="absolute p-1 transition rounded  top-5 right-5 hover:bg-gray-100 focus-visible:ring-2 focus:outline-none ring-primary ring-opacity-75 ring-offset-2"
+                    >
+                        <span class="sr-only">Close modal</span>
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Form -->
+                <form class="flex-grow overflow-x-hidden overflow-y-auto">
+                    <div class="h-full px-6 pb-1 mt-6 space-y-6">
+                        <!-- Full Name -->
+                        <div>
+                            <label for="contact-full-name" class="sr-only">Full Name</label>
+                            <input
+                                required
+                                type="text"
+                                name="full-name"
+                                id="contact-full-name"
+                                class="block w-full border-gray-300 py-2.5 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+                                placeholder="Full Name"
+                            />
+                        </div>
+                        <!-- Number -->
+                        <div>
+                            <label for="contact-phone-number" class="sr-only">Phone Number</label>
+                            <input
+                                type="tel"
+                                name="phone-number"
+                                id="contact-phone-number"
+                                class="block w-full border-gray-300 py-2.5 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+                                placeholder="Phone Number"
+                            />
+                        </div>
+                        <!-- Email -->
+                        <div>
+                            <label for="contact-email" class="sr-only">Email</label>
+                            <input
+                                required
+                                type="email"
+                                name="email"
+                                id="contact-email"
+                                class="block w-full border-gray-300 py-2.5 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+                                placeholder="Email"
+                            />
+                        </div>
+                        <!-- Address -->
+                        <div>
+                            <label for="contact-address" class="sr-only">Address</label>
+                            <input
+                                type="text"
+                                name="address"
+                                id="contact-address"
+                                class="block w-full border-gray-300 py-2.5 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+                                placeholder="Address"
+                            />
+                        </div>
+                        <!-- Preferred date of service
+                        <div>
+                            <label for="contact-date" class="sr-only">Preferred Date of Service</label>
+                            <input
+                                type="date"
+                                name="date"
+                                id="contact-date"
+                                class="block w-full border-gray-300 py-2.5 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+                                placeholder="Preferred Date of Service"
+                            />
+                        </div> -->
+                        <!-- Promo Code -->
+                        <!-- <div>
+                            <label for="contact-promo-code" class="sr-only">Promo Code</label>
+                            <input
+                                type="text"
+                                name="promo-code"
+                                id="contact-promo-code"
+                                class="block w-full border-gray-300 py-2.5 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+                                placeholder="Promo Code"
+                            />
+                        </div> -->
+                        <!-- How can we help you? (Concern) -->
+                        <div>
+                            <label for="contact-concern" class="sr-only">How can we help you?</label>
+                            <textarea
+                                required
+                                id="contact-concern"
+                                name="concern"
+                                rows="4"
+                                class="block py-2.5 w-full border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+                                placeholder="How can we help you?"
+                            ></textarea>
+                        </div>
+                        <!-- <fieldset>
+                            <legend class="text-base font-medium text-gray-900">Services</legend>
+                            <div class="mt-2.5 grid gap-y-3.5 grid-cols-2">
+                                7
+                                
+                                    <div class="flex items-center">
+                                        <input
+                                            id="contact-service-106046"
+                                            name="106046"
+                                            type="checkbox"
+                                            class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                                        />
+                                        <label for="contact-label-service-106046" class="ml-3 text-sm font-medium text-gray-700">Exterior Detailing</label>
+                                    </div>
+                                
+                                    <div class="flex items-center">
+                                        <input
+                                            id="contact-service-106047"
+                                            name="106047"
+                                            type="checkbox"
+                                            class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                                        />
+                                        <label for="contact-label-service-106047" class="ml-3 text-sm font-medium text-gray-700">Paint Polishing</label>
+                                    </div>
+                                
+                                    <div class="flex items-center">
+                                        <input
+                                            id="contact-service-106048"
+                                            name="106048"
+                                            type="checkbox"
+                                            class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                                        />
+                                        <label for="contact-label-service-106048" class="ml-3 text-sm font-medium text-gray-700">Paint Correction</label>
+                                    </div>
+                                
+                                    <div class="flex items-center">
+                                        <input
+                                            id="contact-service-106049"
+                                            name="106049"
+                                            type="checkbox"
+                                            class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                                        />
+                                        <label for="contact-label-service-106049" class="ml-3 text-sm font-medium text-gray-700">Ceramic Coating</label>
+                                    </div>
+                                
+                                    <div class="flex items-center">
+                                        <input
+                                            id="contact-service-106050"
+                                            name="106050"
+                                            type="checkbox"
+                                            class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                                        />
+                                        <label for="contact-label-service-106050" class="ml-3 text-sm font-medium text-gray-700">Interior Detailing</label>
+                                    </div>
+                                
+                                    <div class="flex items-center">
+                                        <input
+                                            id="contact-service-106051"
+                                            name="106051"
+                                            type="checkbox"
+                                            class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                                        />
+                                        <label for="contact-label-service-106051" class="ml-3 text-sm font-medium text-gray-700">Headlight Restoration</label>
+                                    </div>
+                                
+                                    <div class="flex items-center">
+                                        <input
+                                            id="contact-service-106052"
+                                            name="106052"
+                                            type="checkbox"
+                                            class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                                        />
+                                        <label for="contact-label-service-106052" class="ml-3 text-sm font-medium text-gray-700">Aluminum Polishing</label>
+                                    </div>
+                                
+                            </div>
+                        </fieldset> -->
+                        <!-- Photo Upload -->
+                        <!-- <div
+                            x-data="{
+                            imageUrl: '',
+                            fileTooLarge: false,
+                            fileChosen(event) {
+                                if (this.isProperlySized(event)) {
+                                    this.fileToDataUrl(event, (src) => (this.imageUrl = src));
+                                    this.fileTooLarge = false;
+                                }
+                                else
+                                    this.fileTooLarge = true;
+                            },
+                            fileToDataUrl(event, callback) {
+                                if (!event.target.files.length) return;
+                                let file = event.target.files[0],
+                                    reader = new FileReader();
+                                reader.readAsDataURL(file);
+                                reader.onload = (e) => callback(e.target.result);
+                            },
+                            isProperlySized(event) {
+                                const files = event.currentTarget.files;
+                                for (const file in files) {
+                                    const filesize = ((files[file].size/1024)/1024).toFixed(4);
+                                    if (filesize > 2)
+                                        return false;
+                                }
+                                return true;
+                            },
+                        }"
+                        >
+                            <label class="block text-sm font-medium text-gray-700">Share a photo</label>
+                            <div x-show="imageUrl !== ''" x-collapse>
+                                <div class="flex flex-col items-center space-y-2 sm:space-y-0 sm:flex-row sm:space-x-5">
+                                    <img :src="imageUrl" class="object-cover rounded-md w-[200px] h-[140px]" />
+                                    <button
+                                        @click="imageUrl = ''; $refs.fileInput.value = '';"
+                                        type="button"
+                                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm  hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    >
+                                        Change
+                                    </button>
+                                </div>
+                            </div>
+                            <div x-show="imageUrl === ''" x-collapse>
+                                <div
+                                    x-on:dragenter.prevent.stop
+                                    x-on:dragleave.prevent.stop
+                                    class="flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-dashed rounded-md"
+                                >
+                                    <div class="space-y-1 text-center">
+                                        <svg class="w-12 h-12 mx-auto text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                            <path
+                                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                        <div class="flex justify-center text-sm text-gray-600">
+                                            <label
+                                                for="file-upload"
+                                                class="relative font-medium bg-white rounded-md cursor-pointer  text-secondary hover:text-secondary-darker focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
+                                            >
+                                                <span>Upload a file</span>
+                                                <input
+                                                    x-ref="fileInput"
+                                                    id="file-upload"
+                                                    name="file-upload"
+                                                    type="file"
+                                                    accept="image/*"
+                                                    class="sr-only"
+                                                    @change="fileChosen"
+                                                />
+                                            </label>
+                                        </div>
+                                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 2MB</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p x-show="fileTooLarge" class="mt-2 text-sm text-red-600">
+                                The selected file is too large. Please reduce the size or choose another file.
+                            </p>
+                        </div> -->
+                        <div
+                        onclick= "send_sms('Picture-Perfect-Detailing-LLC')" 
+                            class="
+                                inline-flex
+                                items-center
+                                justify-center
+                                w-full
+                                px-5
+                                py-2.5
+                                text-sm
+                                font-medium
+                                transition
+                                border-2 border-transparent
+                                rounded-md
+                                bg-primary
+                                text-primary-foreground
+                                focus:outline-none
+                                hover:bg-primary-darker
+                                bg-primar
+                                focus-visible:ring-2
+                                ring-primary ring-opacity-75 ring-offset-2
+                            "
+                        >
+                            Send
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
+
+            <!-- Modal -->
+<template x-teleport="body">
+    <div x-show="reviewModalOpen" @keydown.escape.prevent.stop="reviewModalOpen = false" role="dialog" aria-modal="true" x-id="['modal-title']" :aria-labelledby="$id('modal-title')" class="fixed inset-0 z-40 pt-8 pb-20" x-trap.noscroll.inert="reviewModalOpen">
+        <!-- Overlay -->
+        <div x-show="reviewModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" aria-hidden="true" class="fixed inset-0 bg-black bg-opacity-50"></div>
+        <!-- Panel -->
+        <div
+            x-show="reviewModalOpen"
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            @click="reviewModalOpen = false"
+            class="relative flex items-center justify-center w-full h-full"
+        >
+            <div @click.stop class="flex flex-col w-full max-h-full pb-6 mx-6 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl px-6 sm:my-8 sm:align-middle sm:max-w-sm">
+                <!-- <div @click.stop class="flex flex-col w-full max-h-full pb-6 mx-6 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:px-6 sm:my-8 sm:align-middle sm:max-w-sm"> -->
+                <!-- Header -->
+                <div class="relative px-6 bg-white">
+                    <!-- Title -->
+                    <h2 class="mt-16 mb-2 text-lg font-medium text-center" :id="$id('modal-title')">Leave a review</h2>
+                    <button @click="reviewModalOpen = false;" class="absolute p-1 transition rounded top-5 right-5 hover:bg-gray-100 focus-visible:ring-2 focus:outline-none ring-primary ring-opacity-75 ring-offset-2">
+                        <span class="sr-only">Close modal</span>
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Review Links. TODO: Think about target=_blank and noopener noreferrer here -->
+                <ul class="mt-2 space-y-6">
+                    <span hidden class="sr-only">Review types</span>
+                    <!-- Google Link -->
+                    
+                    <li>
+                        <a href="https://https://www.google.com/search?q=picture+perfect+detailing+llc&amp;ei=sY_oYYL-DJGtqtsPpqal0A0&amp;ved=0ahUKEwjCmsfU7b71AhWRlmoFHSZTCdoQ4dUDCA4&amp;uact=5&amp;oq=picture+perfect+detailing+llc&amp;gs_lcp=Cgdnd3Mtd2l6EAMyCQgAEMkDEBYQHjoKCAAQRxCwAxDJAzoHCAAQRxCwAzoGCAAQFhAeOggIABCGAxCLAzoICCEQFhAdEB5KBAhBGABKBAhGGABQpARYsBZgrBdoB3AAeACAAWGIAaoGkgECMTCYAQCgAQHIAQS4AQLAAQE&amp;sclient=gws-wiz#lrd=0x88e0ad0203de8665:0x42b10c90a63c7533,1,,," class="inline-flex w-full px-5 py-2.5 text-sm font-medium transition border-2 border-transparent rounded-md bg-primary text-primary-foreground focus:outline-none hover:bg-primary-darker focus:ring-2 ring-primary ring-opacity-75 ring-offset-2">Leave a Review</a>
+                    </li>
+                    
+                    <!-- Facebook Link -->
+                    
+                    <!-- Yelp Link -->
+                    
+                    <li>
+                        <a href="https://facebook.com/PicturePerfectMobileDetailing/reviews" class="inline-flex w-full px-5 py-2.5 text-sm font-medium transition border-2 border-transparent rounded-md bg-primary text-primary-foreground focus:outline-none hover:bg-primary-darker focus:ring-2 ring-primary ring-opacity-75 ring-offset-2">Leave a Review</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>
+ 
+
+
+        <!-- <div x-data="{ open: false }">
+            <button @click="open = true">Open Dialogue</button>
+
+            <span x-show="open" x-trap.inert.noscroll="open">
+                ...
+
+                <div x-data="{ open: false }">
+                    <button @click="open = true">Open Nested Dialogue</button>
+
+                    <span x-show="open" x-trap="open">
+                        ...
+
+                        <button @click="open = false">Close Nested Dialogue</button>
+                    </span>
+                </div>
+
+                <button @click="open = false">Close Dialogue</button>
+            </span>
+        </div>
+        <p>Nostrud eu amet nostrud id ut cillum sint minim anim Lorem nulla nisi cillum commodo. Dolor exercitation incididunt et velit qui ea nisi. Do consectetur in ex adipisicing. Irure id aute non nulla eiusmod incididunt deserunt labore amet. Consequat proident nisi amet est consequat sunt eiusmod aute ut exercitation amet. Eu eu Lorem minim duis culpa sit qui nostrud irure aliquip irure occaecat. Duis eu duis id veniam.</p> -->
+    </body>
+</html>
