@@ -222,7 +222,7 @@
                             class="flex items-center justify-center flex-shrink-0 pr-5 bg-white rounded-md  focus:ring-2 focus:outline-none ring-primary ring-opacity-75 ring-offset-2"
                         >
                             <img
-                                class="w-[80px] h-[80px] xl:w-[150px] xl:h-[150px] scale-100 origin-left transition"
+                                class="h-[80px] xl:h-[150px] scale-100 origin-left transition w-auto"
                                 src="https://landing-page-app-hero-images.s3.amazonaws.com/media/5d4cfc97-5656-4cea-bdd9-f534b3093215.jpeg"
                                 alt="Brand Logo"
                             />
@@ -458,7 +458,7 @@
                                         <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                             <div class="relative grid gap-6 px-5 py-6 bg-white sm:gap-8 sm:p-8">
                                                 <!-- Render each sublink -->
-                                                <!-- <each loop="link in [{&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Exterior&#x27;, &#x27;href&#x27;: &#x27;gallery-Exterior&#x27;}, {&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Interior&#x27;, &#x27;href&#x27;: &#x27;gallery-Interior&#x27;}, {&#x27;title&#x27;: &#x27;All Photos&#x27;, &#x27;copy&#x27;: &#x27;All Photos&#x27;, &#x27;href&#x27;: &#x27;gallery-All&#x27;}]"> -->
+                                                <!-- <each loop="link in [{&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Exterior&#x27;, &#x27;href&#x27;: &#x27;gallery-Exterior&#x27;}, {&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Interior&#x27;, &#x27;href&#x27;: &#x27;gallery-Interior&#x27;}, {&#x27;title&#x27;: &#x27;Our Best Work&#x27;, &#x27;copy&#x27;: &#x27;Awards&#x27;, &#x27;href&#x27;: &#x27;gallery-Awards&#x27;}, {&#x27;title&#x27;: &#x27;All Photos&#x27;, &#x27;copy&#x27;: &#x27;All Photos&#x27;, &#x27;href&#x27;: &#x27;gallery-All&#x27;}]"> -->
                                                   
                                                     <a
                                                         href=" gallery-Exterior "
@@ -478,6 +478,17 @@
                                                     >
                                                         <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
                                                         <p class="mt-1 text-sm text-gray-500">Interior</p>
+                                                    </a>
+                                                <!-- </each> -->
+                                               <!--  -->
+                                                 
+                                                    <a
+                                                        href=" gallery-Awards "
+                                                        role="menuitem"
+                                                        class="block p-3 -m-3 transition rounded-md  focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 hover:bg-gray-50"
+                                                    >
+                                                        <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
+                                                        <p class="mt-1 text-sm text-gray-500">Awards</p>
                                                     </a>
                                                 <!-- </each> -->
                                                <!--  -->
@@ -605,7 +616,7 @@
                             href="/"
                             class="flex items-center justify-center flex-shrink-0 bg-white rounded-b-lg focus-visible:ring focus:outline-none ring-primary"
                         >
-                            <img class="w-[80px] h-[80px]" src="https://landing-page-app-hero-images.s3.amazonaws.com/media/5d4cfc97-5656-4cea-bdd9-f534b3093215.jpeg" alt="Brand Logo" />
+                            <img class="h-[80px]" src="https://landing-page-app-hero-images.s3.amazonaws.com/media/5d4cfc97-5656-4cea-bdd9-f534b3093215.jpeg" alt="Brand Logo" />
                         </a>
                     </div>
                     <div class="-mr-2">
@@ -787,6 +798,12 @@
                                                 </a>
                                             <!-- </each> -->
                                             
+                                                <a href="gallery-Awards" role="menuitem" class="block p-3 -m-3 transition rounded-md">
+                                                    <!-- <p class="text-base font-medium text-gray-900">Our Best Work</p> -->
+                                                    <p class="mt-1 text-sm text-gray-500">Awards</p>
+                                                </a>
+                                            <!-- </each> -->
+                                            
                                                 <a href="gallery-All" role="menuitem" class="block p-3 -m-3 transition rounded-md">
                                                     <!-- <p class="text-base font-medium text-gray-900">All Photos</p> -->
                                                     <p class="mt-1 text-sm text-gray-500">All Photos</p>
@@ -828,8 +845,8 @@
                             href="#"
                             class="relative block w-full px-5 py-3 font-medium text-center rounded-md  focus:outline-none focus:ring focus:z-10 text-secondary bg-gray-50 hover:bg-gray-100"
                             >
-                            Call Booking
-                            <!-- call -->
+                            
+                            <!-- none -->
                             </a
                         >
                     </div>
@@ -976,16 +993,6 @@
             
                 
             
-            <div class="inline-flex w-full ml-3 sm:w-auto">
-                <a
-                    target = "_blank" 
-                    href="tel:+1 321-806-8870"
-                    class="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium transition bg-white border-2 rounded-md  sm:py-4 sm:px-10 hover:bg-primary hover:bg-opacity-10 focus:outline-none focus:ring-2 ring-primary ring-offset-2 ring-opacity-75 sm:w-auto text-primary border-primary"
-                >
-                    Call Booking
-                </a>
-            </div>
-            
 <!--             
             <div class="w-full sm:w-auto">
                 <button
@@ -1097,27 +1104,28 @@
                                     >Home</a
                                 >
                             </li>
+                            
+                                
+                                <li>
+                                    <a
+                                        href="#gallery"
+                                        class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
+                                        >Gallery</a
+                                    >
+                                </li>
+                                
+                            
+                            
                             <li>
                                 <a
-                                    href="#"
-                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
-                                    >Gallery</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
+                                    href="reviews"
                                     class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
                                     >Reviews</a
                                 >
                             </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
-                                    >Team</a
-                                >
-                            </li>
+                            
+                            
+                            
                         </ul>
                     </div>
                     <!-- Services Links -->
@@ -1127,7 +1135,7 @@
                             
                             <li>
                                 <a
-                                    href="service-service-Exterior-Detailing"
+                                    href="service-Exterior-Detailing"
                                     class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
                                     >Exterior Detailing</a
                                 >
@@ -1135,7 +1143,7 @@
                             
                             <li>
                                 <a
-                                    href="service-service-Paint-Polishing"
+                                    href="service-Paint-Polishing"
                                     class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
                                     >Paint Polishing</a
                                 >
@@ -1143,7 +1151,7 @@
                             
                             <li>
                                 <a
-                                    href="service-service-Paint-Correction"
+                                    href="service-Paint-Correction"
                                     class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
                                     >Paint Correction</a
                                 >
@@ -1151,7 +1159,7 @@
                             
                             <li>
                                 <a
-                                    href="service-service-Ceramic-Coating"
+                                    href="service-Ceramic-Coating"
                                     class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
                                     >Ceramic Coating</a
                                 >
@@ -1159,7 +1167,7 @@
                             
                             <li>
                                 <a
-                                    href="service-service-Interior-Detailing"
+                                    href="service-Interior-Detailing"
                                     class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
                                     >Interior Detailing</a
                                 >
@@ -1167,7 +1175,7 @@
                             
                             <li>
                                 <a
-                                    href="service-service-Headlight-Restoration"
+                                    href="service-Headlight-Restoration"
                                     class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
                                     >Headlight Restoration</a
                                 >
@@ -1175,7 +1183,7 @@
                             
                             <li>
                                 <a
-                                    href="service-service-Aluminum-Polishing"
+                                    href="service-Aluminum-Polishing"
                                     class="p-1 text-base text-gray-500 rounded hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-opacity-75"
                                     >Aluminum Polishing</a
                                 >
@@ -1210,7 +1218,7 @@
                                 <a
                                     href="#"
                                     class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
-                                    >Monday: 08:00am - 06:00pm</a
+                                    >Monday: 8:00am - 6:00pm</a
                                 >
                             </li>
                             
@@ -1250,7 +1258,7 @@
                                 <a
                                     href="#"
                                     class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
-                                    >Saturday: 8:00am - 6:00pm</a
+                                    >Saturday: 08:00am - 06:00pm</a
                                 >
                             </li>
                             
@@ -1449,72 +1457,72 @@
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-95427"
-                                            name="95427"
+                                            id="contact-service-106046"
+                                            name="106046"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-95427" class="ml-3 text-sm font-medium text-gray-700">Exterior Detailing</label>
+                                        <label for="contact-label-service-106046" class="ml-3 text-sm font-medium text-gray-700">Exterior Detailing</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-95428"
-                                            name="95428"
+                                            id="contact-service-106047"
+                                            name="106047"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-95428" class="ml-3 text-sm font-medium text-gray-700">Paint Polishing</label>
+                                        <label for="contact-label-service-106047" class="ml-3 text-sm font-medium text-gray-700">Paint Polishing</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-95429"
-                                            name="95429"
+                                            id="contact-service-106048"
+                                            name="106048"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-95429" class="ml-3 text-sm font-medium text-gray-700">Paint Correction</label>
+                                        <label for="contact-label-service-106048" class="ml-3 text-sm font-medium text-gray-700">Paint Correction</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-95430"
-                                            name="95430"
+                                            id="contact-service-106049"
+                                            name="106049"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-95430" class="ml-3 text-sm font-medium text-gray-700">Ceramic Coating</label>
+                                        <label for="contact-label-service-106049" class="ml-3 text-sm font-medium text-gray-700">Ceramic Coating</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-95431"
-                                            name="95431"
+                                            id="contact-service-106050"
+                                            name="106050"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-95431" class="ml-3 text-sm font-medium text-gray-700">Interior Detailing</label>
+                                        <label for="contact-label-service-106050" class="ml-3 text-sm font-medium text-gray-700">Interior Detailing</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-95432"
-                                            name="95432"
+                                            id="contact-service-106051"
+                                            name="106051"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-95432" class="ml-3 text-sm font-medium text-gray-700">Headlight Restoration</label>
+                                        <label for="contact-label-service-106051" class="ml-3 text-sm font-medium text-gray-700">Headlight Restoration</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-95433"
-                                            name="95433"
+                                            id="contact-service-106052"
+                                            name="106052"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-95433" class="ml-3 text-sm font-medium text-gray-700">Aluminum Polishing</label>
+                                        <label for="contact-label-service-106052" class="ml-3 text-sm font-medium text-gray-700">Aluminum Polishing</label>
                                     </div>
                                 
                             </div>
