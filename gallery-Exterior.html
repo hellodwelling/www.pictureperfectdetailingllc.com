@@ -15,7 +15,8 @@
         <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css"> -->
         <link rel="stylesheet" href="https://prophone-templates.vercel.app/assets/output.css">
         
-        <!-- <link rel="stylesheet"  type="text/css"  href="/staticfiles/landing_page_gen/tailwind.css"> -->
+        
+        <link href="https://prophone.herokuapp.com/staticfiles/landing_page_gen/output.css" rel="stylesheet">
         <!-- Include Scripts -->
         <!-- Header Component, only used for presentation -->
 
@@ -31,10 +32,7 @@
 <script defer src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js"></script>
 <!-- Focus Visible Polyfill -->
 <script defer src="https://unpkg.com/focus-visible@5.2.0/dist/focus-visible.min.js"></script>
-        <!-- <link rel="stylesheet" href="/staticfiles/landing_page_gen/style.css" type="text/css"> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!-- 
-        <script src="https://prophone.herokuapp.com/staticfiles/landing_page_gen/render.js"></script>  -->
 
         <!-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script> -->
         <style>
@@ -831,24 +829,29 @@
                       
                     </div>
                     <!-- Bottom CTAs -->
-                    <div class="p-1 bg-gray-50">
-                        <a
-                            href="#"
-                            class="relative block w-full px-5 py-3 font-medium text-center rounded-md  focus:outline-none focus:ring focus:z-10 text-secondary bg-gray-50 hover:bg-gray-100"
+                    <div class="d-none p-1 bg-primary sm:bg-gray-50">
+                        
+                            <button
+                            @click="contactModalOpen = true"
+                            class="relative block w-full px-5 py-3 font-medium text-center rounded-md  focus:outline-none focus:ring focus:z-10 text-white sm:text-secondary  hover:bg-gray-100"
                             >
-                            Text Booking
-                            <!-- text -->
-                            <!-- are these 2 correct? -->
-                            </a
-                        >
-                        <a
-                            href="#"
-                            class="relative block w-full px-5 py-3 font-medium text-center rounded-md  focus:outline-none focus:ring focus:z-10 text-secondary bg-gray-50 hover:bg-gray-100"
-                            >
-                            
-                            <!-- none -->
-                            </a
-                        >
+                                Send Us a Text
+                            </button>
+                        
+                        
+                            <a
+                                target = "_blank" 
+                                href="tel:+1 321-806-8870"
+                                :class="{'scale-100': !scrolledFromTop, 'scale-75': scrolledFromTop}"
+                                class="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium transition bg-white border-2 rounded-md  hover:bg-primary hover:bg-opacity-10 focus:outline-none focus:ring-2 ring-primary ring-opacity-75 ring-offset-2 sm:w-auto text-primary border-primary"
+                                >
+                                Give Us a Call
+                            </a>
+                         
+                     
+                
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1175,13 +1178,13 @@
             
             
             <div class="w-full sm:w-auto">
-                <button
-                    @click="contactModalOpen = true"
+                <a
+                    href="https://pictureperfectdetailingllc.booking.detailbookie.com/signup"
                     class="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium text-white transition border-2 border-transparent rounded-md  sm:py-4 sm:px-10 hover:bg-primary-darker focus:outline-none focus-visible:ring-2 ring-primary ring-offset-2 ring-opacity-75 sm:w-auto bg-primary"
-                    >
-                    Text Booking
-                </button>
-            </div> 
+                >
+                    wMobile Booking
+                </a>
+            </div>
             
                 
             
@@ -1217,7 +1220,11 @@
                 <img class="h-[80px]" src="https://landing-page-app-hero-images.s3.amazonaws.com/media/5d4cfc97-5656-4cea-bdd9-f534b3093215.jpeg" alt="" />
                 
                 <p class="text-base text-gray-500">
-                    The finest Auto Detailing service in Cocoa and surrounding areas. We provide professional service and offer free quotes. Reach out today to learn how we can help.
+                    Picture Perfect Detailing<br/>
+                     
+                        Cocoa, FL <br/>
+                    
+                    +1 321-806-8870
                     <!-- Is this supposed to be here and correct?  -->
                     <!-- The finest landscaping in Austin & surrounding areas. Exceptional, professional service. You are our priority! -->
                 </p>
@@ -1388,7 +1395,7 @@
                 <div class="md:grid md:grid-cols-2 md:gap-8">
                     <!-- Locations Links -->
                     <div>
-                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Locations</h3>
+                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Service Areas</h3>
                         <ul role="list" class="mt-4 -mx-1 space-y-4">
                             
                             <li>
@@ -1410,7 +1417,7 @@
                                 <a
                                     href="#"
                                     class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
-                                    >Monday: 8:00am - 6:00pm</a
+                                    >Sun: 8:00am - 6:00pm</a
                                 >
                             </li>
                             
@@ -1418,7 +1425,7 @@
                                 <a
                                     href="#"
                                     class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
-                                    >Tuesday: 8:00am - 6:00pm</a
+                                    >Mon: 8:00am - 6:00pm</a
                                 >
                             </li>
                             
@@ -1426,7 +1433,7 @@
                                 <a
                                     href="#"
                                     class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
-                                    >Wednesday: 8:00am - 6:00pm</a
+                                    >Tues: 08:00am - 06:00pm</a
                                 >
                             </li>
                             
@@ -1434,7 +1441,7 @@
                                 <a
                                     href="#"
                                     class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
-                                    >Thursday: 8:00am - 6:00pm</a
+                                    >Wed: 8:00am - 6:00pm</a
                                 >
                             </li>
                             
@@ -1442,7 +1449,7 @@
                                 <a
                                     href="#"
                                     class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
-                                    >Friday: 8:00am - 6:00pm</a
+                                    >Thu: 8:00am - 6:00pm</a
                                 >
                             </li>
                             
@@ -1450,7 +1457,7 @@
                                 <a
                                     href="#"
                                     class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
-                                    >Saturday: 08:00am - 06:00pm</a
+                                    >Fri: 8:00am - 6:00pm</a
                                 >
                             </li>
                             
@@ -1458,7 +1465,7 @@
                                 <a
                                     href="#"
                                     class="p-1 text-base text-gray-500 rounded  hover:text-gray-900 focus:ring-2 focus:outline-none ring-primary ring-offset-2 ring-opacity-75"
-                                    >Sunday: 8:00am - 6:00pm</a
+                                    >Sat: 8:00am - 6:00pm</a
                                 >
                             </li>
                             
@@ -1649,72 +1656,72 @@
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-106046"
-                                            name="106046"
+                                            id="contact-service-120899"
+                                            name="120899"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-106046" class="ml-3 text-sm font-medium text-gray-700">Exterior Detailing</label>
+                                        <label for="contact-label-service-120899" class="ml-3 text-sm font-medium text-gray-700">Exterior Detailing</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-106047"
-                                            name="106047"
+                                            id="contact-service-120900"
+                                            name="120900"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-106047" class="ml-3 text-sm font-medium text-gray-700">Paint Polishing</label>
+                                        <label for="contact-label-service-120900" class="ml-3 text-sm font-medium text-gray-700">Paint Polishing</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-106048"
-                                            name="106048"
+                                            id="contact-service-120901"
+                                            name="120901"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-106048" class="ml-3 text-sm font-medium text-gray-700">Paint Correction</label>
+                                        <label for="contact-label-service-120901" class="ml-3 text-sm font-medium text-gray-700">Paint Correction</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-106049"
-                                            name="106049"
+                                            id="contact-service-120902"
+                                            name="120902"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-106049" class="ml-3 text-sm font-medium text-gray-700">Ceramic Coating</label>
+                                        <label for="contact-label-service-120902" class="ml-3 text-sm font-medium text-gray-700">Ceramic Coating</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-106050"
-                                            name="106050"
+                                            id="contact-service-120903"
+                                            name="120903"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-106050" class="ml-3 text-sm font-medium text-gray-700">Interior Detailing</label>
+                                        <label for="contact-label-service-120903" class="ml-3 text-sm font-medium text-gray-700">Interior Detailing</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-106051"
-                                            name="106051"
+                                            id="contact-service-120904"
+                                            name="120904"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-106051" class="ml-3 text-sm font-medium text-gray-700">Headlight Restoration</label>
+                                        <label for="contact-label-service-120904" class="ml-3 text-sm font-medium text-gray-700">Headlight Restoration</label>
                                     </div>
                                 
                                     <div class="flex items-center">
                                         <input
-                                            id="contact-service-106052"
-                                            name="106052"
+                                            id="contact-service-120905"
+                                            name="120905"
                                             type="checkbox"
                                             class="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
                                         />
-                                        <label for="contact-label-service-106052" class="ml-3 text-sm font-medium text-gray-700">Aluminum Polishing</label>
+                                        <label for="contact-label-service-120905" class="ml-3 text-sm font-medium text-gray-700">Aluminum Polishing</label>
                                     </div>
                                 
                             </div>
